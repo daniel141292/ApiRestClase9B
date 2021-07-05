@@ -1,23 +1,23 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
 const DulcesSchema = new mongoose.Schema({
     nombre:{
-        type:String,
+        type: String,
         required:true
     },
     precio:{
-        type:Number,
+        type: Number,
         required:true
     },
     existencia:{
-        type:Number,
+        type: Number,
         default:5
     },
     descripcion:{
-        type:String
+        type: String
     }
 })
 
-const Dulce = mongoose.model('Dulce', DulcesSchema);
+const Dulces = mongoose.model('Dulces', DulcesSchema);
 
-module.exports = Dulce;
+module.exports = Dulces;
