@@ -20,11 +20,29 @@ function agregar(req,res) {
 
 function buscar(req,res,next) {
     let consulta ={};
-    
+    consulta[req.params.key]=req.params.value;
+    modeloDulce.find(consulta).then(dulces =>{
+        if(!dulces.length) return next();
+        req.body.dulces= dulces;
+        return next();
+        
+    }).catch(error => {
+        req.body.error=error;
+        next();
+    })
+}
+
+function mostrar(req,res) {
+    if(req.body.error) return res.status(500).send({error});
+    if(!req.body.dulces) return res.status(404).send({message: 'No hay datos que mostrar'});
+    let dulcesObj = req.body.dulces;
+    return res.status(200).send({dulcesObj});
     
 }
 
 module.exports={
     index,
-    agregar
+    agregar,
+    buscar,
+    mostrar
 }
