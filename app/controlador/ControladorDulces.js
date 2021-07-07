@@ -40,9 +40,29 @@ function mostrar(req,res) {
     
 }
 
+function actualizar(req,res) {
+    if(req.body.error) return res.status(500).send({error});
+    if(!req.body.dulces) return res.status(404).send({message: 'No hay datos para actualizar'});
+    let dulcesObjeto = req.body.dulces[0];
+    dulcesObjeto=Object.assign(dulcesObjeto,req.body);
+    dulcesObjeto.save().then(dulceAlta => {
+        res.status(200).send({message: 'Los datos se actalizaron correctamente',dulceAlta});
+    }).catch(error => res.status(500).send({error}));
+}
+
+function eliminar(req,res) {
+    if(req.body.error) return res.status(500).send({error});
+    if(!req.body.dulces) return res.status(404).send({message: 'No hay datos para eliminar'});
+    req.body.dulces[0].remove().then(dulceEliminar =>{
+        res.status(200).send({message: 'La informacion se elimino correctamente', dulceEliminar})
+    }).catch(error => res.status(500).send({error}));
+}
+
 module.exports={
     index,
     agregar,
     buscar,
-    mostrar
+    mostrar,
+    actualizar,
+    eliminar
 }
